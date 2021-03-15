@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { bodyValidator, controller, get, post } from './decorators';
 
 @controller('/auth')
-export class LoginController {
+class LoginController {
   @get('/login')
   getLogin(req: Request, res: Response): void {
     res.send(`
@@ -22,7 +22,7 @@ export class LoginController {
 
   @post('/login')
   @bodyValidator('email', 'password')
-  postLogin(req: Request, res: Response) {
+  Login(req: Request, res: Response) {
     const { email, password } = req.body;
 
     if (email && password && email === 'hi@hi.com' && password === 'password') {
@@ -31,5 +31,11 @@ export class LoginController {
     } else {
       res.send('Invalid email or password');
     }
+  }
+
+  @get('/logout')
+  Logout(req: Request, res: Response) {
+    req.session = undefined;
+    res.redirect('/');
   }
 }
